@@ -6,7 +6,13 @@ function helloWorld(){
 
 
 function cleanFirstname($firstName){
+	return ucwords(strtolower(trim($firstName)));
+}
 
+function cleanLastname($lastName){
+	return strtoupper(trim($lastName));
+}
 
-	return $firstName;
+function cleanEmail($email){
+	return strtolower(trim($email));
 }
