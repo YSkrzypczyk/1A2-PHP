@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require "functions.php";
 
 
@@ -108,16 +108,36 @@ if( !in_array($country, $listCountries) ){
 
 
 // --> Date de naissance entre 6ans et 99ans
-echo $birthday;
 
+//$birthday = "1986-11-29";
 
+$birthdayExploded = explode("-", $birthday);
+//Vérification de la date
+if (!checkdate($birthdayExploded[1],$birthdayExploded[2],$birthdayExploded[0])){
+	$listOfErrors[] = "Date de naissance incorrecte";
+}else{
+	//Vérification de l'age
+	$todaySecond = time();
+	$birthdaySecond = strtotime($birthday);
+	$ageSecond = $todaySecond - $birthdaySecond;
+	$age = $ageSecond/60/60/24/365.25;
+	if( $age <= 6 || $age >= 99 ){
+		$listOfErrors[] = "Vous n'avez pas l'âge requis (entre 6 et 99 ans)";
+	}
+}
 
 //Si OK
 if(empty($listOfErrors)){
 	//Insertion en BDD
 	//Redirection sur la page de connexion
 }else{
+
 	//Si NOK
-	//On stock les erreurs
+	//On stock les erreurs et la data
+	$_SESSION['listOfErrors'] = $listOfErrors;
+	unset($_POST["pwd"]);
+	unset($_POST["pwdConfirm"]);
+	$_SESSION['data'] = $_POST;
 	//Redirection sur la page d'inscription
+	header('location: ../register.php');
 }

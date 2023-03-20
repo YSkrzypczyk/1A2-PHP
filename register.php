@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php require "core/functions.php";?>
 <?php include "template/header.php";?>
 
@@ -6,6 +7,30 @@
 			<h1>S'inscrire</h1>
 		</div>
 	</div>
+
+
+<?php if(isset($_SESSION['listOfErrors'])) {?>
+	<div class="row">
+		<div class="col-12">
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			  
+			  <?php
+
+			  foreach ($_SESSION['listOfErrors'] as $error)
+			  {
+			  	echo "<li>".$error."</li>";
+			  }
+			  unset($_SESSION['listOfErrors']);
+			  ?>
+
+
+
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+	</div>
+<?php } ?> 
+
 
 	<form action="core/userAdd.php" method="POST">
 		<div class="row mt-4">
@@ -22,10 +47,10 @@
 			</div>
 
 		</div>
-
 		<div class="row mt-3">
 			<div class="col-lg-3">
-				<input type="text" class="form-control" name="firstname" placeholder="Votre prénom" required="required">
+				<input type="text" class="form-control" name="firstname" placeholder="Votre prénom" required="required" 
+				value="<?= ( !empty($_SESSION["data"]))?$_SESSION["data"]["firstname"]:""; ?>">
 			</div>
 
 			<div class="col-lg-3">
