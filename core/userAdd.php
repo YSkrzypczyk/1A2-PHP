@@ -30,7 +30,6 @@ Array
     [cgu] => on
 )
 
-
 */
 
 //Vérification des données
@@ -38,16 +37,16 @@ Array
 // Vérifier que les champs obligatoires existent et non sont pas vides
 // FAILLE XSS
 if( count($_POST)!=9 
-	|| empty($_POST['gender'])
-	|| empty($_POST['firstname']
-	|| empty($_POST['lastname']
-	|| empty($_POST['email']
-	|| empty($_POST['pwd']
-	|| empty($_POST['pwdConfirm']
-	|| empty($_POST['country']
-	|| empty($_POST['birthday']
-	|| empty($_POST['cgu']
-) ){
+	|| !isset($_POST['gender'])
+	|| empty($_POST['firstname'])
+	|| empty($_POST['lastname'])
+	|| empty($_POST['email'])
+	|| empty($_POST['pwd'])
+	|| empty($_POST['pwdConfirm'])
+	|| empty($_POST['country'])
+	|| empty($_POST['birthday'])
+	|| empty($_POST['cgu']) 
+){
 	die ("Tentative de HACK");
 }
 
@@ -55,7 +54,7 @@ if( count($_POST)!=9
 
 //Nettoyage des données
 $gender = $_POST['gender'];
-$firstName = cleanFirstname($_POST['firstname']);
+$firstname = cleanFirstname($_POST['firstname']);
 $lastname = cleanLastname($_POST['lastname']);
 $email = cleanEmail($_POST['email']);
 $pwd = $_POST['pwd'];
@@ -74,13 +73,13 @@ if( !in_array($gender, $listGenders) ){
 	$listOfErrors[] = "Le genre n'existe pas";
 }
 // --> Nom plus de 2 caractères
-if(strlen($lastName) < 2){
+if(strlen($lastname) < 2){
 	$listOfErrors[] = "Le nom doit faire plus de 2 caractères";
 }
 
 // --> Prénom plus de 2 caractères
 // --> Nom plus de 2 caractères
-if(strlen($firstName) < 2){
+if(strlen($firstname) < 2){
 	$listOfErrors[] = "Le prénom doit faire plus de 2 caractères";
 }
 // --> Format de l'email
@@ -98,9 +97,19 @@ if(strlen($pwd) < 8
 
 
 // --> Meme mot de passe de confirmation
+if( $pwd != $pwdConfirm){
+	$listOfErrors[] = "La confirmation du mot de passe ne correspond pas";
+}
 // --> Est-ce que le pays est cohérent
+$listCountries = ["fr", "pl", "al", "be"];
+if( !in_array($country, $listCountries) ){
+	$listOfErrors[] = "Le pays n'existe pas";
+}
+
+
 // --> Date de naissance entre 6ans et 99ans
-// --> CGU ok
+echo $birthday;
+
 
 
 //Si OK
