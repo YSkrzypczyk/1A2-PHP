@@ -85,8 +85,21 @@ if(strlen($firstname) < 2){
 // --> Format de l'email
 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 	$listOfErrors[] = "L'email est incorrect";
+}else{
+	// --> Unicité de l'email (plus tard)
+	$connection = connectDB();
+	$queryPrepared = $connection->prepare("SELECT * FROM esgi_user WHERE email=:email");
+	$queryPrepared->execute([ "email" => $email ]);
+
+	$results = $queryPrepared->fetch();
+	
+	if(!empty($results)){
+		$listOfErrors[] = "L'email est déjà utilisé";
+	}
+
 }
-// --> Unicité de l'email (plus tard)
+
+
 // --> Complexité du pwd
 if(strlen($pwd) < 8
  || !preg_match("#[a-z]#", $pwd)
@@ -100,6 +113,7 @@ if(strlen($pwd) < 8
 if( $pwd != $pwdConfirm){
 	$listOfErrors[] = "La confirmation du mot de passe ne correspond pas";
 }
+
 // --> Est-ce que le pays est cohérent
 $listCountries = ["fr", "pl", "al", "be"];
 if( !in_array($country, $listCountries) ){
@@ -129,7 +143,25 @@ if (!checkdate($birthdayExploded[1],$birthdayExploded[2],$birthdayExploded[0])){
 //Si OK
 if(empty($listOfErrors)){
 	//Insertion en BDD
+	$queryPrepared = $connection->prepare("INSERT INTO esgi_user
+											(gender, firstname, lastname, email, pwd, birthday, country)
+											VALUES 
+											(:gender, :firstname, :lastname, :email, :pwd, :birthday, :country)");
+
+	$queryPrepared->execute([
+								"gender"=>$gender,
+								"firstname"=>$firstname,
+								"lastname"=>$lastname,
+								"email"=>$email,
+								"pwd"=>"$pwd",
+								"birthday"=>$birthday,
+								"country"=>$country
+							]);
+
+
 	//Redirection sur la page de connexion
+	header('location: ../login.php');
+
 }else{
 
 	//Si NOK

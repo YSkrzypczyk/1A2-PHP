@@ -16,3 +16,14 @@ function cleanLastname($lastName){
 function cleanEmail($email){
 	return strtolower(trim($email));
 }
+
+
+function connectDB(){
+
+	try{
+		$connection = new PDO("mysql:host=localhost;dbname=projet_web_1a2;port=3306", "root", "");
+	}catch(Exception $e){
+		die("Erreur SQL ".$e->getMessage());
+	}
+	return $connection;
+}
