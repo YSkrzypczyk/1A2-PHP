@@ -92,7 +92,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 	$queryPrepared->execute([ "email" => $email ]);
 
 	$results = $queryPrepared->fetch();
-	
+
 	if(!empty($results)){
 		$listOfErrors[] = "L'email est déjà utilisé";
 	}
@@ -153,7 +153,7 @@ if(empty($listOfErrors)){
 								"firstname"=>$firstname,
 								"lastname"=>$lastname,
 								"email"=>$email,
-								"pwd"=>"$pwd",
+								"pwd"=>password_hash($pwd, PASSWORD_DEFAULT),
 								"birthday"=>$birthday,
 								"country"=>$country
 							]);
