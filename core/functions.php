@@ -27,3 +27,18 @@ function connectDB(){
 	}
 	return $connection;
 }
+
+
+
+function isConnected(){
+	if(!empty($_SESSION['email']) && !empty($_SESSION['login'])){
+		return true;
+	}
+	return false;
+}
+
+function redirectIfNotConnected(){
+	if(!isConnected()){
+		header("Location: login.php");
+	}
+}
