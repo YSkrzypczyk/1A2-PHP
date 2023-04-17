@@ -92,6 +92,16 @@ require "conf.inc.php";
 		</div>
 		<div class="row mt-3">
 			<div class="col-12">
+				<img src="captcha.php" width="200px;">
+				<input type="text" class="form-control" name="captcha" required="required" placeholder="Captcha">
+				
+			</div>
+
+		</div>
+
+
+		<div class="row mt-3">
+			<div class="col-12">
 				<input type="checkbox" class="form-check-input" id="cgu" name="cgu" required="required">
 				<label for="cgu" class="form-label">J'accepte les CGUs</label>
 			</div>

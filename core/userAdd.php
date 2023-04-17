@@ -37,7 +37,7 @@ Array
 
 // Vérifier que les champs obligatoires existent et non sont pas vides
 // FAILLE XSS
-if( count($_POST)!=9 
+if( count($_POST)!=10 
 	|| !isset($_POST['gender'])
 	|| empty($_POST['firstname'])
 	|| empty($_POST['lastname'])
@@ -47,6 +47,7 @@ if( count($_POST)!=9
 	|| empty($_POST['country'])
 	|| empty($_POST['birthday'])
 	|| empty($_POST['cgu']) 
+	|| empty($_POST['captcha']) 
 ){
 	die ("Tentative de HACK");
 }
@@ -63,6 +64,7 @@ $pwdConfirm = $_POST['pwdConfirm'];
 $country = $_POST['country'];
 $birthday = $_POST['birthday'];
 $cgu = $_POST['cgu'];
+$captcha = $_POST['captcha'];
 
 
 
@@ -140,6 +142,13 @@ if (!checkdate($birthdayExploded[1],$birthdayExploded[2],$birthdayExploded[0])){
 		$listOfErrors[] = "Vous n'avez pas l'âge requis (entre 6 et 99 ans)";
 	}
 }
+
+
+
+if($captcha != $_SESSION['captcha']){
+	$listOfErrors[] = "Le captcha ne correspond pas";
+}
+
 
 //Si OK
 if(empty($listOfErrors)){
