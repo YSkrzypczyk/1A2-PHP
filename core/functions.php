@@ -32,7 +32,16 @@ function connectDB(){
 
 function isConnected(){
 	if(!empty($_SESSION['email']) && !empty($_SESSION['login'])){
-		return true;
+
+		$connection = connectDB();
+		$queryPrepared = $connection->prepare("SELECT id FROM ".DB_PREFIX."user where email=:email");
+		$queryPrepared->execute(["email"=>$_SESSION['email']]);
+		$result = $queryPrepared->fetch();
+
+		if(!empty($result)){
+			return true;
+		}
+		
 	}
 	return false;
 }
