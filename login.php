@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	require "conf.inc.php";
  	require "core/functions.php";
  ?>
 <?php include "template/header.php";?>
@@ -23,7 +24,7 @@
 			//Récupérer en bdd le mot de passe hashé pour l'email
 			//provenant du formulaire
 			$connect = connectDB();
-			$queryPrepared = $connect->prepare("SELECT pwd FROM esgi_user WHERE email=:email");
+			$queryPrepared = $connect->prepare("SELECT pwd FROM ".DB_PREFIX."user WHERE email=:email");
 			$queryPrepared->execute(["email"=>$email]);
 			$results = $queryPrepared->fetch();
 

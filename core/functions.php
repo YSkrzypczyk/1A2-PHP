@@ -21,7 +21,7 @@ function cleanEmail($email){
 function connectDB(){
 
 	try{
-		$connection = new PDO("mysql:host=localhost;dbname=projet_web_1a2;port=3306", "root", "");
+		$connection = new PDO("mysql:host=".DB_HOST.";dbname=".DB_DATABASE.";port=".DB_PORT,DB_USER, DB_PWD);
 	}catch(Exception $e){
 		die("Erreur SQL ".$e->getMessage());
 	}

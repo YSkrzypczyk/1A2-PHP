@@ -36,6 +36,11 @@
 
       <?php } else { ?>
 
+
+        <li class="nav-item">
+          <a class="nav-link" href="users.php">Liste des utilisateurs</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="logout.php">Se déconnecter</a>
         </li>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require "conf.inc.php";
 require "functions.php";
 
 
@@ -88,7 +89,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 }else{
 	// --> Unicité de l'email (plus tard)
 	$connection = connectDB();
-	$queryPrepared = $connection->prepare("SELECT * FROM esgi_user WHERE email=:email");
+	$queryPrepared = $connection->prepare("SELECT * FROM ".DB_PREFIX."user WHERE email=:email");
 	$queryPrepared->execute([ "email" => $email ]);
 
 	$results = $queryPrepared->fetch();
@@ -143,7 +144,7 @@ if (!checkdate($birthdayExploded[1],$birthdayExploded[2],$birthdayExploded[0])){
 //Si OK
 if(empty($listOfErrors)){
 	//Insertion en BDD
-	$queryPrepared = $connection->prepare("INSERT INTO esgi_user
+	$queryPrepared = $connection->prepare("INSERT INTO ".DB_PREFIX."user
 											(gender, firstname, lastname, email, pwd, birthday, country)
 											VALUES 
 											(:gender, :firstname, :lastname, :email, :pwd, :birthday, :country)");
