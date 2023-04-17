@@ -28,6 +28,7 @@
 			<th>Status</th>
 			<th>Ajouté</th>
 			<th>Modifié</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -45,6 +46,7 @@
 			echo "<td>".$user["status"]."</td>";
 			echo "<td>".$user["date_inserted"]."</td>";
 			echo "<td>".$user["date_updated"]."</td>";
+			echo "<td><a class='btn btn-danger'>Suppression</a></td>";
 			echo "</tr>";
 		}
 
