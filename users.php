@@ -46,7 +46,11 @@
 			echo "<td>".$user["status"]."</td>";
 			echo "<td>".$user["date_inserted"]."</td>";
 			echo "<td>".$user["date_updated"]."</td>";
-			echo "<td><a class='btn btn-danger'>Suppression</a></td>";
+			echo "<td>
+			<a href='core/userDel.php?id=".$user["id"]."' class='btn btn-danger'>
+			Suppression
+			</a>
+			</td>";
 			echo "</tr>";
 		}
 
